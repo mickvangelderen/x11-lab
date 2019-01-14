@@ -1,0 +1,9 @@
+[package]
+name = "x11-lab"
+version = "0.1.0"
+authors = ["Mick van Gelderen <mickvangelderen@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+x11 = { version = "2.18.1", features = [ "xlib" ] }
+static-cstr = { git = "https://github.com/mickvangelderen/static-cstr", branch = "0.1.x" }
