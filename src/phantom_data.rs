@@ -1,5 +1,5 @@
 use std::marker::PhantomData;
 
-pub fn phantom_data<T>(_: T) -> PhantomData<T> {
+pub(crate) fn phantom_data<T>(_: T) -> PhantomData<T> {
     PhantomData
 }
