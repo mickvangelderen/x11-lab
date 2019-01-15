@@ -21,6 +21,7 @@ impl IntoBool for bool {
 }
 
 #[repr(transparent)]
+#[derive(Debug)]
 pub struct Display(ptr::NonNull<xlib::Display>);
 
 impl Display {
@@ -41,6 +42,7 @@ impl Display {
 }
 
 #[repr(transparent)]
+#[derive(Debug)]
 pub struct Window<'d> {
     window: num::NonZeroU64,
     _display: marker::PhantomData<&'d Display>,
