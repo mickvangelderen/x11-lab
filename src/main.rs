@@ -1,4 +1,5 @@
 #![feature(proc_macro_hygiene)]
+#![feature(optin_builtin_traits)]
 
 use self::force_mut::*;
 use static_cstr::static_cstr;
@@ -7,8 +8,11 @@ use std::os::raw::*;
 use std::ptr;
 use x11::xlib as xlib_sys;
 
+mod copy_ref;
 mod force_mut;
+mod freeze;
 mod phantom_data;
+
 // NOTE(mickvangelderen): Declared as pub to get rid of unused fn.
 pub mod xlib;
 
@@ -43,7 +47,8 @@ unsafe fn chaos() {
         ptr::null_mut(),
         xlib_sys::CWBackPixel,
         &mut attributes,
-    ).unwrap();
+    )
+    .unwrap();
 
     xlib_sys::XStoreName(
         display.as_ref().force_mut(),
@@ -51,8 +56,7 @@ unsafe fn chaos() {
         static_cstr!("X11 Lab").as_ptr() as *mut c_char,
     );
 
-    let wm_protocols =
-        xlib::intern_atom(&display, static_cstr!("WM_PROTOCOLS"), true).unwrap();
+    let wm_protocols = xlib::intern_atom(&display, static_cstr!("WM_PROTOCOLS"), true).unwrap();
     let wm_delete_window =
         xlib::intern_atom(&display, static_cstr!("WM_DELETE_WINDOW"), true).unwrap();
 
